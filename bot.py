@@ -32,7 +32,7 @@ EIGHT_BALL_ANSWERS = [
 
 # Intents
 intents = discord.Intents.default()
-intents.message_content = True  # Needed for reading user messages
+intents.message_content = True
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
@@ -45,8 +45,13 @@ async def eight_ball(ctx, *, question: str = None):
     if not question:
         await ctx.send("🎱 You need to ask a question, e.g. `!8ball Will I be lucky today?`")
         return
-    answer = random.choice(EIGHT_BALL_ANSWERS)
+    
+    # Check if the question ends with "yes or no"
+    if question.strip().lower().endswith("yes or no"):
+        answer = random.choice(["Yes.", "No."])
+    else:
+        answer = random.choice(EIGHT_BALL_ANSWERS)
+    
     await ctx.send(f"🎱 {answer}")
 
-# Run the bot (token comes from Railway environment variable)
 bot.run(os.getenv("DISCORD_TOKEN"))
