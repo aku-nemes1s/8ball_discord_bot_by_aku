@@ -40,6 +40,7 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 async def on_ready():
     print(f"✅ Logged in as {bot.user}")
 
+# 8ball command
 @bot.command(name="8ball")
 async def eight_ball(ctx, *, question: str = None):
     if not question:
@@ -54,4 +55,28 @@ async def eight_ball(ctx, *, question: str = None):
     
     await ctx.send(f"🎱 {answer}")
 
+# Calculator command
+@bot.command(name="calc")
+async def calc(ctx, *, expression: str):
+    """
+    Simple math calculator: + - * / ^
+    Usage: !calc 2+3*4
+    """
+    try:
+        # Replace ^ with ** for power operation
+        expression = expression.replace("^", "**")
+
+        # Allow only safe characters
+        allowed = "0123456789+-*/().** "
+        if not all(ch in allowed for ch in expression):
+            await ctx.send("❌ Invalid characters in expression!")
+            return
+
+        result = eval(expression)
+        await ctx.send(f"📊 Result: `{result}`")
+
+    except Exception as e:
+        await ctx.send(f"⚠️ Error: {str(e)}")
+
+# Run bot
 bot.run(os.getenv("DISCORD_TOKEN"))
