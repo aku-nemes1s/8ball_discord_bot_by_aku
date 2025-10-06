@@ -44,7 +44,7 @@ async def on_ready():
 @bot.command(name="8ball")
 async def eight_ball(ctx, *, question: str = None):
     if not question:
-        await ctx.send("🎱 You need to ask a question, e.g. `!8ball Will I be lucky today?`")
+        await ctx.send("🎱 Асуултаа асуу, жишээ: `!8ball Am I Really GAY?`")
         return
     
     # Check if the question ends with "yes or no"
@@ -69,14 +69,14 @@ async def calc(ctx, *, expression: str):
         # Allow only safe characters
         allowed = "0123456789+-*/().** "
         if not all(ch in allowed for ch in expression):
-            await ctx.send("❌ Invalid characters in expression!")
+            await ctx.send("❌ Юу шаагаад бган зөв бич!!")
             return
 
         result = eval(expression)
-        await ctx.send(f"📊 Result: `{result}`")
+        await ctx.send(f"📊 Хариу: `{result}`")
 
     except Exception as e:
-        await ctx.send(f"⚠️ Error: {str(e)}")
+        await ctx.send(f"⚠️ Юу аашаад бган!: {str(e)}")
 
 # Run bot
 bot.run(os.getenv("DISCORD_TOKEN"))
