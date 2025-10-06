@@ -89,16 +89,26 @@ async def calc(ctx, *, expression: str):
         await ctx.send(f"⚠️ Юу аашаад бган!: {str(e)}")
 
 translator = Translator()
+
+@bot.event
+async def on_ready():
+    try:
+        await bot.tree.sync()
+        print(f"✅ Slash commands synced")
+    except Exception as e:
+        print(f"❌ Sync error: {e}")
+    print(f"Logged in as {bot.user}")
+
 # Slash command: /translate
 @bot.tree.command(name="translate", description="Translate text into another language")
 async def translate(interaction: discord.Interaction, target_lang: str, *, text: str):
     try:
-        result = translator.translate(text, dest=target_lang)
+        # ✅ await the async translate
+        result = await translator.translate(text, dest=target_lang)
         await interaction.response.send_message(
             f"🌍 **Translated to {target_lang}**:\n{result.text}"
         )
     except Exception as e:
         await interaction.response.send_message(f"⚠️ Error: {e}")
-
 # Run bot
 bot.run(os.getenv("DISCORD_TOKEN"))
