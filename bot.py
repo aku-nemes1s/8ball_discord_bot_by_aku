@@ -3,7 +3,6 @@ import random
 import discord
 from discord.ext import commands
 from googletrans import Translator
-import asyncio
 # 20 official Magic 8-Ball answers
 EIGHT_BALL_ANSWERS = [
     # Positive
@@ -32,7 +31,7 @@ EIGHT_BALL_ANSWERS = [
 ]
 
 # Intents
-translator = Translator()
+
 intents = discord.Intents.default()
 intents.message_content = True
 
@@ -89,12 +88,12 @@ async def calc(ctx, *, expression: str):
     except Exception as e:
         await ctx.send(f"⚠️ Юу аашаад бган!: {str(e)}")
 
+translator = Translator()
 # Slash command: /translate
 @bot.tree.command(name="translate", description="Translate text into another language")
 async def translate(interaction: discord.Interaction, target_lang: str, *, text: str):
     try:
-        # Await the async translate coroutine
-        result = await translator.translate(text, dest=target_lang)
+        result = translator.translate(text, dest=target_lang)
         await interaction.response.send_message(
             f"🌍 **Translated to {target_lang}**:\n{result.text}"
         )
