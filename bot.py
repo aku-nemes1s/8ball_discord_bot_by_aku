@@ -73,6 +73,10 @@ async def calc(ctx, *, expression: str):
             return
 
         result = eval(expression)
+        # Format result: remove unnecessary decimals
+        if isinstance(result, float):
+            # Round to 10 decimal places, then strip trailing zeros
+            result = f"{result:.10f}".rstrip("0").rstrip(".")
         await ctx.send(f"📊 Хариу: `{result}`")
 
     except Exception as e:
