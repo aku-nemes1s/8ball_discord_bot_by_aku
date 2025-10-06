@@ -82,5 +82,16 @@ async def calc(ctx, *, expression: str):
     except Exception as e:
         await ctx.send(f"⚠️ Юу аашаад бган!: {str(e)}")
 
+# Slash command: /translate
+@bot.tree.command(name="translate", description="Translate text into another language")
+async def translate(interaction: discord.Interaction, target_lang: str, *, text: str):
+    try:
+        result = translator.translate(text, dest=target_lang)
+        await interaction.response.send_message(
+            f"🌍 **Translated to {target_lang}**:\n{result.text}"
+        )
+    except Exception as e:
+        await interaction.response.send_message(f"⚠️ Error: {e}")
+
 # Run bot
 bot.run(os.getenv("DISCORD_TOKEN"))
