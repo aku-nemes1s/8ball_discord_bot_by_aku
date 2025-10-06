@@ -2,6 +2,7 @@ import os
 import random
 import discord
 from discord.ext import commands
+from googletrans import Translator
 
 # 20 official Magic 8-Ball answers
 EIGHT_BALL_ANSWERS = [
@@ -31,6 +32,7 @@ EIGHT_BALL_ANSWERS = [
 ]
 
 # Intents
+translator = Translator()
 intents = discord.Intents.default()
 intents.message_content = True
 
