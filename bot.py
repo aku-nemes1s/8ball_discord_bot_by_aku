@@ -38,7 +38,12 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 
 @bot.event
 async def on_ready():
-    print(f"✅ Logged in as {bot.user}")
+    try:
+        synced = await bot.tree.sync()
+        print(f"✅ Synced {len(synced)} commands globally")
+    except Exception as e:
+        print(f"❌ Sync error: {e}")
+    print(f"Logged in as {bot.user}")
 
 # 8ball command
 @bot.command(name="8ball")
